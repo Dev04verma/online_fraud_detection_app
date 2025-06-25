@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Online Payment Fraud Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+    <h1>🔐 Online Payment Fraud Detection</h1>
+    <form action="/predict" method="post">
+        <input type="number" step="any" name="amount" placeholder="💰 Transaction Amount" value="{{ sample.amount if sample else '' }}" required>
+        <input type="number" step="any" name="oldbalanceOrg" placeholder="🏦 Sender Old Balance" value="{{ sample.oldbalanceOrg if sample else '' }}" required>
+        <input type="number" step="any" name="newbalanceOrig" placeholder="💳 Sender New Balance" value="{{ sample.newbalanceOrig if sample else '' }}" required>
+        <input type="number" step="any" name="oldbalanceDest" placeholder="📤 Receiver Old Balance" value="{{ sample.oldbalanceDest if sample else '' }}" required>
+        <input type="number" step="any" name="newbalanceDest" placeholder="📥 Receiver New Balance" value="{{ sample.newbalanceDest if sample else '' }}" required>
+        <select name="type" required>
+           <option value="CASH_OUT">CASH_OUT</option>
+           <option value="TRANSFER">TRANSFER</option>
+           <option value="CASH_IN">CASH_IN</option>
+        </select>
+        <div style="display: flex; justify-content: space-between; margin-top: 15px;">
+            <button type="submit">🧠 Predict</button>
+            <a href="/sample"><button type="button">🔁 Load Sample</button></a>
+        </div>
+    </form>
+
+    {% if result %}
+        <div class="result">{{ result }}</div>
+    {% endif %}
+</div>
+</body>
+</html>
